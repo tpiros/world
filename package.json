@@ -1,0 +1,16 @@
+{
+  "name": "mlu-world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tamas Piros",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.11.2",
+    "jade": "^1.9.2",
+    "marklogic": "^1.0.0-ea3"
+  }
+}

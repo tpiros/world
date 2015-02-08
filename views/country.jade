@@ -1,0 +1,22 @@
+extends ./layout
+block content
+  a(href=data.referer) << back to list
+  h1 #{data.id}
+    small  (#{data.name.official})
+    
+  ul.list-unstyled
+    li #[strong Capital:] #{data.capital}
+    li #[strong Region:] #{data.region}
+    li #[strong Language:] 
+      ul
+        each language in data.languages
+           li #{language}
+    li #[strong Subregion:] #{data.subregion}
+    li #[strong Currency:] #{data.currency}
+    li #[strong Calling code:] +#{data.callingCode}
+    li #[strong Residents:] #{data.demonym}
+    li #[strong Translations:] 
+      ul
+        each val, key in data.translations
+          li #{val.official} 
+            small (#{key})

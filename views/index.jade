@@ -1,0 +1,11 @@
+extends ./layout
+block content
+  each country in data.result
+    p
+      a(href='/country/' + country) #{country}
+  - var n = 1;
+  nav
+    ul.pagination
+      while n <= data.totalPages
+        li
+          a(href='/'+ n)= n++

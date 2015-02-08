@@ -1,14 +1,17 @@
-Sample project using the MarkLogic Node.js Client API
+#Sample project using the MarkLogic Node.js Client API
+(http://tamas.io/marklogic-and-node-js/)
 
 To get started with this project follow these steps:
-1) Create a MarkLogic REST Application
-2) Load the data into the database from the 'data' folder
-
+* Create a MarkLogic REST Application
+* Load the data into the database from the 'data' folder
 (If you need help with these two steps please read http://tamas.io/javascript-in-a-nosql-database/)
 
-3) `git clone` the repository
-4) `npm install`
-5) `bower install`
+* `git clone` the repository
+* `npm install`
+* `bower install`
+* `node app.js`
+
+#License
 
 The MIT License (MIT)
 

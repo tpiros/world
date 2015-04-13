@@ -11,6 +11,6 @@
   "dependencies": {
     "express": "^4.11.2",
     "jade": "^1.9.2",
-    "marklogic": "^1.0.0-ea3"
+    "marklogic": "^1.0.2"
   }
 }

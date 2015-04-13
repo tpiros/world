@@ -19,7 +19,6 @@ var getCountryInfo = function(uri) {
 }
 
 var index = function(req, res) {
-  console.log('calling index');
   var counter      = 0;
   var countryNames = [];
   var pageData     = {};

@@ -25,30 +25,29 @@ var index = function(req, res) {
   var page = 1;
   if (req.params.page) {
     page = parseInt(req.params.page);
-  } else {
-    getPaginationData().then(function(data) {
-      var totalDocuments  = parseInt(data.total);
-      var perPage         = parseInt(data['page-length']);
-      var totalPages      = parseInt(totalDocuments / perPage);
-      pageData.totalPages = totalPages;
-      var calculated = parseInt((perPage * page) - 9);
+  }
+  getPaginationData().then(function(data) {
+    var totalDocuments  = parseInt(data.total);
+    var perPage         = parseInt(data['page-length']);
+    var totalPages      = parseInt(totalDocuments / perPage);
+    pageData.totalPages = totalPages;
+    var calculated = parseInt((perPage * page) - 9);
 
-      getDocuments(calculated).then(function(documents) {
-        documents.forEach(function(document) {
-          counter++;
-          countryNames.push(document.content.id);
-          if (counter === documents.length) {
-            pageData.result = countryNames;
-            res.render('index', {data: pageData});
-          }
-        });
-      }).catch(function(error) {
-        console.log('Error', error);
+    getDocuments(calculated).then(function(documents) {
+      documents.forEach(function(document) {
+        counter++;
+        countryNames.push(document.content.id);
+        if (counter === documents.length) {
+          pageData.result = countryNames;
+          res.render('index', {data: pageData});
+        }
       });
     }).catch(function(error) {
       console.log('Error', error);
     });
-  }
+  }).catch(function(error) {
+    console.log('Error', error);
+  });
 };
 
 var country = function(req, res) {

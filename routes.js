@@ -5,18 +5,19 @@ var qb         = marklogic.queryBuilder;
 
 var getPaginationData = function() {
   return db.documents.query(
-    qb.where().orderBy(qb.sort('id')).slice(0)
+    qb.where((qb.collection('countries'))).orderBy(qb.sort('id')).withOptions({categories: 'none'})
   ).result();
-}
+};
+
 var getDocuments = function(from) {
   return db.documents.query(
-    qb.where().orderBy(qb.sort('id')).slice(from)
+    qb.where((qb.collection('countries'))).orderBy(qb.sort('id')).slice(from)
   ).result();
-}
+};
 
 var getCountryInfo = function(uri) {
   return db.documents.read(uri).result();
-}
+};
 
 var index = function(req, res) {
   var counter      = 0;
@@ -27,14 +28,16 @@ var index = function(req, res) {
     page = parseInt(req.params.page);
   }
   getPaginationData().then(function(data) {
-    var totalDocuments  = parseInt(data.total);
-    var perPage         = parseInt(data['page-length']);
+    console.log(data);
+    var totalDocuments  = parseInt(data[0].total);
+    var perPage         = parseInt(data[0]['page-length']);
     var totalPages      = parseInt(totalDocuments / perPage);
     pageData.totalPages = totalPages;
     var calculated = parseInt((perPage * page) - 9);
 
     getDocuments(calculated).then(function(documents) {
       documents.forEach(function(document) {
+        console.log(document);
         counter++;
         countryNames.push(document.content.id);
         if (counter === documents.length) {

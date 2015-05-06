@@ -9,6 +9,7 @@
   "author": "Tamas Piros",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.12.3",
     "express": "^4.11.2",
     "jade": "^1.9.2",
     "marklogic": "^1.0.2"

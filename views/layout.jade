@@ -2,10 +2,25 @@ doctype html
 html(lang='en')
 head
     meta(charset='utf-8')
-    link(href='/bower_components/bootstrap/dist/css/bootstrap.min.css', rel='stylesheet')
+    link(href='/dist/project.css', rel='stylesheet')
+    link(href='/dist/styles.css', rel='stylesheet')
   body
+    nav.navbar.navbar-inverse.navbar-fixed-top
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') Countries of the World
+        #navbar.navbar-collapse.collapse
+          form.navbar-form.navbar-right(method='post', action='/search')
+            .form-group
+              input.form-control(type='text', placeholder='Enter search term', name='search')
+            button.btn.btn-success(type='search') Search
     div.container
-      h1 Countries of the World 
-        span.glyphicon.glyphicon-globe
-      block content
+      .row
+          //- span.glyphicon.glyphicon-globe
+        block content
     script(src='/bower_components/jquery/dist/jquery.min.js')

@@ -1,11 +1,11 @@
 extends ./layout
 block content
-  each country in data.result
+  each document in data.result
     p
-      a(href='/country/' + country) #{country}
+      a(href='#{document.uri}') #{document.country}
   - var n = 1;
   nav
     ul.pagination
       while n <= data.totalPages
-        li
+        li(class=active == n ? 'active' : '')
           a(href='/'+ n)= n++

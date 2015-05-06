@@ -1,0 +1,16 @@
+extends ./layout
+block content
+  //- each stat in stats
+  p Total number of results: #{stats.total}
+  hr
+  each stat in stats.results
+    div
+      p 
+        a(href="#{stat.uri}") #{stat.uri}
+        small  (score: #{stat.score})
+      each match in stat.matches
+        p
+          small Matched in: #{match.path} with the text: 
+        each text in match['match-text']
+          small #{text.highlight}
+    hr

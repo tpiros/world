@@ -19,7 +19,20 @@ var getCountryInfo = function(uri) {
   return db.documents.read(uri).result();
 };
 
-var index = function(req, res, next) {
+var doSearch = function(term) {
+  return db.documents.query(
+    qb.where(
+      qb.term(term)
+    )
+    .orderBy(
+      //qb.score('logtf'),
+      qb.sort('id')
+    )
+    .withOptions({ debug: true })
+  ).result();
+}
+
+var index = function(req, res) {
   if (req.url === '/favicon.ico') {
     res.writeHead(200, {'Content-Type': 'image/x-icon'} );
     res.end();
@@ -41,10 +54,11 @@ var index = function(req, res, next) {
       getDocuments(calculated).then(function(documents) {
         documents.forEach(function(document) {
           counter++;
-          countryNames.push(document.content.id);
+          countryNames.push({country: document.content.id, uri: document.uri});
           if (counter === documents.length) {
             pageData.result = countryNames;
-            res.render('index', {data: pageData});
+            var active = req.url.replace('/', '').length === 0 ? 1 : req.url.replace('/', '');
+            res.render('index', {data: pageData, active: active});
           }
         });
       }).catch(function(error) {
@@ -59,14 +73,26 @@ var index = function(req, res, next) {
 var country = function(req, res) {
   var country = req.params.country;
   var referer = req.headers.referer;
-  var uri     = '/country/' + country.toLowerCase().replace(/\s/g, '') + '.json';
+  var uri     = '/country/' + country;
   getCountryInfo(uri).then(function(countryInfo) {
     countryInfo[0].content.referer = referer;
     res.render('country', {data: countryInfo[0].content});
-  });
+  }).catch(function(error) {
+    console.log(error);
+  })
+};
+
+var search = function(req, res) {
+  var term = req.body.search;
+  doSearch(term).then(function(searchResult) {
+    res.render('results', {stats: searchResult[0]});
+  }).catch(function(error) {
+    console.log(error);
+  })
 };
 
 module.exports = {
   index: index,
-  country: country
+  country: country,
+  search: search
 };

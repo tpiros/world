@@ -29,6 +29,7 @@ var doSearch = function(term) {
       qb.sort('id')
     )
     .withOptions({ debug: true })
+    .slice(0, 257)
   ).result();
 }
 
@@ -85,7 +86,17 @@ var country = function(req, res) {
 var search = function(req, res) {
   var term = req.body.search;
   doSearch(term).then(function(searchResult) {
-    res.render('results', {stats: searchResult[0]});
+    // just don't think about this ... bit of black magic
+    // console.log(searchResult[0].results[0].matches[0].path)
+    // console.log(searchResult[0].results[0].matches)
+    // var matches = searchResult[0].results[0].matches[0].path;
+    // var m = matches.match(/(array-node)(.+)/)[2];
+    // var b = m.match(/\(.+\)/)[0];
+    // var x = b.replace('\/text()', '').replace('("', '').replace('")', '');
+    // var matchedText = searchResult[0].results[0].matches[0]['match-text'][0].highlight;
+    var x = null;
+    var matchedText = null;
+    res.render('results', {stats: searchResult[0], matchedElement: x, matchedText: matchedText});
   }).catch(function(error) {
     console.log(error);
   })
